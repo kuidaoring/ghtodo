@@ -63,11 +63,12 @@
         setUpLoading();
 
         loadConfig();
+        gh = createGithubInstance();
         if (!checkConfig()) {
+            loadingWrapper.style.display = "none";
             template.selectedTab = 2;
             selectTab("setting");
         } else {
-            gh = createGithubInstance();
             selectTab("todo");
             listOpenIssues();
         }
