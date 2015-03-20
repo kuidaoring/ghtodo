@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<script src="./bower_components/webcomponentsjs/webcomponents.min.js"></script>
+<link rel="import" href="./bower_components/polymer/polymer.html">
+<link rel="import" href="./bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="./bower_components/paper-input/paper-input.html">
+<link rel="import" href="./bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="./bower_components/paper-shadow/paper-shadow.html">
+<link rel="import" href="./bower_components/core-localstorage/core-localstorage.html">
+<link rel="import" href="./bower_components/core-ajax/core-xhr.html">
+<link rel="import" href="./bower_components/core-transition/core-transition-css.html">
+
+<link rel="import" href="./elements/task-todo.html">
+<link rel="import" href="./elements/task-done.html">
+
+<link href="./css/style.css" rel="stylesheet">
+</head>
+<body unresolved>
+<template is="auto-binding">
+<div id="tabs">
+<div>
+<paper-tabs selected="{{selectedTab}}">
+    <paper-tab id="tab-todo" on-tap="{{selectTodo}}" data-tabname="todo">やる</paper-tab>
+    <paper-tab id="tab-done" on-tap="{{selectDone}}" data-tabname="done">やった</paper-tab>
+    <paper-tab id="tab-setting" on-tap="{{selectSetting}}" data-tabname="setting">設定</paper-tab>
+</paper-tabs>
+</div>
+</div>
+<div id="main">
+<section id="content-todo" class="{{tabs.todo}}">
+    <div class="content {{loading}}">
+    <template if="{{!todoList.error}}">
+        <div layout horizontal>
+            <paper-input label="やる" value="{{newTodo}}" on-keyup="{{addTodo}}" flex></paper-input>
+            <paper-fab icon="add" on-tap="{{addTodo}}"></paper-fab>
+        </div>
+        <template repeat="{{todo in todoList}}">
+            <task-todo
+             name="{{todo.name}}"
+             status="{{todo.status}}"
+             number="{{todo.number}}"
+             url="{{todo.url}}"
+             on-done="{{toDone}}"
+            ></task-todo>
+        </template>
+        <template if="{{todoList.length === 0}}">
+            <paper-shadow z="1" class="task-msg">
+                <h2>やるタスクはありません。</h2>
+            </paper-shadow>
+        </template>
+    </template>
+    <template if="{{todoList.error}}">
+        <paper-shadow z="1" class="task-msg">
+            <h2>やるタスクを取得できませんでした。</h2>
+        </paper-shadow>
+    </template>
+    </div>
+</section>
+
+<section id="content-done" class="{{tabs.done}}">
+    <div class="content {{loading}}">
+    <template if="{{!doneList.error}}">
+        <template repeat="{{done in doneList}}">
+            <task-done
+             name="{{done.name}}"
+             status="{{done.status}}"
+             number="{{done.number}}"
+             url="{{done.url}}"
+             on-todo="{{toTodo}}"
+            ></task-done>
+        </template>
+        <template if="{{doneList.length === 0}}">
+            <paper-shadow z="1" class="task-msg">
+                <h2>やったタスクはありません。</h2>
+            </paper-shadow>
+        </template>
+    </template>
+    <template if="{{doneList.error}}">
+        <paper-shadow z="1" class="task-msg">
+            <h2>やったタスクを取得できませんでした。</h2>
+        </paper-shadow>
+    </template>
+    </div>
+</section>
+
+<section id="content-setting" class="{{tabs.setting}}">
+    <div layout vertical>
+        <paper-input floatinglabel label="owner" value="{{config.owner}}"></paper-input>
+        <paper-input floatinglabel label="repository name" value="{{config.repo}}"></paper-input>
+        <paper-input floatinglabel label="token" value="{{config.token}}"></paper-input>
+        <paper-input floatinglabel label="github url" value="{{config.githubUrl}}"></paper-input>
+        <paper-input floatinglabel label="api url" value="{{config.apiUrl}}"></paper-input>
+        <paper-button raised on-tap="{{saveConfig}}">submit</paper-button>
+    </div>
+</section>
+</div>
+<div id="loading-wrap">
+    <paper-spinner id="loading" active></paper-spinner>
+</div>
+<core-localstorage name="configData" value="{{configData}}"></core-localstorage>
+</template>
+<core-xhr id="xhr"></core-xhr>
+
+<script type="text/javascript" src="./js/github.js"></script>
+<script type="text/javascript" src="./js/app.js"></script>
+</body>
+</html>

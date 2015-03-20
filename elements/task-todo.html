@@ -1,0 +1,66 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+
+<polymer-element name="task-todo" attributes="name number url status">
+    <template>
+        <style>
+        .item {
+            padding: 20px;
+        }
+        .state {
+            width: 24px;
+            height: 24px;
+        }
+        .state paper-spinner {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+        }
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+        #button[active] {
+            background-color: #00C853;
+            color: #fff;
+        }
+        #button::shadow #bg {
+            display: none;
+        }
+        </style>
+        <div laytout vertical id="task">
+            <paper-shadow z="1" layout horizontal center class="item">
+                <span class="state">
+                    <paper-spinner id="loading"></paper-spinner>
+                </span>
+                <h2 flex><a href="{{url}}" target="_blank">{{name}}</a></h2>
+                <div layout vertical>
+                    <paper-button toggle id="button" on-tap="{{onDone}}">
+                        <core-icon id="botton-icon" icon="done"><core-icon>
+                    </paper-button>
+                </div>
+            </paper-shadow>
+        </div>
+    </template>
+    <script>
+        Polymer("task-todo", {
+            observe: {
+                status: 'onChangeStatus',
+            },
+            onDone: function() {
+                this.$.button.disabled = true;
+                this.fire('done', {name: this.name});
+            },
+            onChangeStatus: function(oldStatus, newStatus) {
+                if (newStatus == 'loading') {
+                    this.$.loading.active = true;
+                }
+                if (oldStatus == 'loading') {
+                    this.$.loading.active = false;
+                }
+            }
+        });
+    </script>
+</polymer-element>

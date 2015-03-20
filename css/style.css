@@ -1,0 +1,37 @@
+body {
+    position: relative;
+}
+#tabs {
+    top: 0px;
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+    z-index: 999;
+}
+task-doing::shadow #task, task-todo::shadow #task, task-done::shadow #task, task-nottodo::shadow #task {
+    margin: 20px 0px;
+}
+section[id^="content-"] {
+    margin-top: 48px;
+    padding: 20px;
+    display: none;
+}
+section[id^="content-"].on {
+    display: block;
+}
+.task-msg {
+    padding: 20px;
+}
+.content.loading {
+    display: none;
+}
+#loading-wrap {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #fff;
+}
+#loading {
+    width: 80px;
+    height: 80px;
+}

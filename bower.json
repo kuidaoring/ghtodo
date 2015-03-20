@@ -1,0 +1,26 @@
+{
+  "name": "ghtodo",
+  "version": "0.0.0",
+  "authors": [
+    "kuidaoring <kuijob@gmail.com>"
+  ],
+  "main": "index.html",
+  "moduleType": [
+    "yui"
+  ],
+  "keywords": [
+    "todo"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "core-elements": "Polymer/core-elements#~0.5.4",
+    "paper-elements": "Polymer/paper-elements#~0.5.4"
+  }
+}
