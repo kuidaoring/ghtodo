@@ -92,15 +92,5 @@
         }, callback);
     }
 
-    Github.prototype.test = function(options) {
-        this.request({
-            path: "repos/kuidaoring/todotest/milestones",
-            method: "GET",
-            callback: function(r) {
-                console.dir(r);
-            },
-        });
-    };
-
     window.Github = Github;
 }());
