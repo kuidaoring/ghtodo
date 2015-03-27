@@ -22,6 +22,9 @@
 
         headers["Authorization"] = "token " + this.token;
 
+        // ignore cache
+        params._t = (new Date()).getTime();
+
         xhr.request({
             url:             url,
             method:          method,
