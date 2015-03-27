@@ -37,7 +37,7 @@
     };
 
     template.addTodo = function(e) {
-        if(e.keyCode === undefined || isShiftEnter(e) || isCtrlEnter(e)) {
+        if(e.keyCode === undefined || isSpecialEnter(e)) {
             if (isEmpty(template.newTodo)) {
                 return;
             }
@@ -181,16 +181,11 @@
         }, 1000);
     }
 
-    function isShiftEnter(e) {
-        if (e.shiftKey && (e.keyCode === ENTER_KEYCODE || e.charCode === ENTER_KEYCODE)) {
-            return true;
-        }
-        return false;
-    }
-
-    function isCtrlEnter(e) {
-        if (e.ctrlKey && (e.keyCode === ENTER_KEYCODE || e.charCode === ENTER_KEYCODE)) {
-            return true;
+    function isSpecialEnter(e) {
+        if (e.keyCode === ENTER_KEYCODE || e.charCode === ENTER_KEYCODE) {
+            if (e.shiftKey || e.ctrlKey || e.metaKey) {
+                return true
+            }
         }
         return false;
     }

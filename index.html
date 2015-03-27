@@ -34,7 +34,7 @@
     <div class="content {{loading}}">
     <template if="{{!todoList.error}}">
         <div layout horizontal>
-            <paper-input label="やる" value="{{newTodo}}" on-keyup="{{addTodo}}" flex></paper-input>
+            <paper-input label="やる" value="{{newTodo}}" on-keydown="{{addTodo}}" flex></paper-input>
             <paper-fab icon="add" on-tap="{{addTodo}}"></paper-fab>
         </div>
         <template repeat="{{todo in todoList}}">
