@@ -38,20 +38,32 @@
         });
     };
 
-    Github.prototype.getOpenIssues = function(callback) {
-        this.getIssues(callback);
+    Github.prototype.getOpenIssues = function(callback, sort) {
+        this.getIssues(callback, {
+            isClosed: false,
+            sort: sort,
+        });
     };
 
-    Github.prototype.getClosedIssues = function(callback) {
-        this.getIssues(callback, true);
+    Github.prototype.getClosedIssues = function(callback, sort) {
+        this.getIssues(callback, {
+            isClosed: true,
+            sort: sort,
+        });
     };
 
-    Github.prototype.getIssues = function(callback, isClosed) {
+    Github.prototype.getIssues = function(callback, options) {
+        var isClosed  = options.isClosed,
+            sort      = options.sort,
+            direction = "desc";
+
         this.request({
             path: this.basePath + "issues",
             method: "GET",
             params: {
-                state: isClosed ? "closed": "open",
+                state:      isClosed ? "closed": "open",
+                sort:       sort,
+                direction:  direction,
             },
         }, callback);
     };
