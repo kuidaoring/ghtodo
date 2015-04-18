@@ -4,6 +4,8 @@
     var ENTER_KEYCODE = 13;
     var DEFAULT_API_URL = "https://api.github.com/";
     var DEFAULT_GITHUB_URL = "https://github.com/";
+    var DEFAULT_SORT_ORDER = "created";
+
     var config;
     var gh;
     var xhr = document.getElementById("xhr");
@@ -142,7 +144,7 @@
                 template.todoList.error = true;
             }
             stopLoading();
-        });
+        }, config.sortOrder);
     }
 
     function listClosedIssues() {
@@ -164,7 +166,7 @@
                 template.doneList.error = true;
             }
             stopLoading();
-        });
+        }, config.sortOrder);
     }
 
     function startLoading() {
@@ -212,6 +214,7 @@
             config = {
                 apiUrl: DEFAULT_API_URL,
                 githubUrl: DEFAULT_GITHUB_URL,
+                sortOrder: DEFAULT_SORT_ORDER,
             };
         }
         template.config = config;
@@ -224,6 +227,7 @@
             && config.token
             && config.githubUrl
             && config.apiUrl
+            && config.sortOrder
         );
     }
 
